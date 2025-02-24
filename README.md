@@ -4634,75 +4634,75 @@ createBusSearchResponse(fromCity = null, toCity = null, departureDate = null) {
   };
 
   const createCustomSelect = (id, label, selectedCity) => {
-    const cities = Object.keys(busCityData);
-    return `
-      <div class="custom-select-container">
-        <input type="text" 
-               id="${id}-input" 
-               class="city-search-input" 
-               placeholder="${label}"
-               autocomplete="off"
-               ${selectedCity ? `value="${selectedCity}"` : ''}>
-        <input type="hidden" 
-               id="${id}" 
-               name="${id}" 
-               ${selectedCity ? `value="${busCityData[selectedCity].id}"` : ''}>
-        <div id="${id}-dropdown" class="city-dropdown">
-          <div class="dropdown-header">
-            <span>Select City</span>
-            <button class="close-dropdown-btn">×</button>
-          </div>
-          <div class="city-options">
-            ${cities.map(city => `
-              <div class="city-option" 
-                   data-city="${city}"
-                   data-id="${busCityData[city].id}"
-                   ${selectedCity === city ? 'data-selected="true"' : ''}>
-                <div class="city-id">${busCityData[city].id}</div>
-                <div class="city-name">${busCityData[city].name}</div>
-              </div>
-            `).join('')}
-          </div>
+  const cities = Object.keys(busCityData);
+  return `
+    <div class="custom-select-container">
+      <input type="text" 
+             id="${id}-input" 
+             class="city-search-input" 
+             placeholder="${label}"
+             autocomplete="off"
+             ${selectedCity ? `value="${selectedCity}"` : ''}>
+      <input type="hidden" 
+             id="${id}" 
+             name="${id}" 
+             ${selectedCity ? `value="${busCityData[selectedCity].id}"` : ''}>
+      <div id="${id}-dropdown" class="city-dropdown">
+        <div class="dropdown-header">
+          <span>Select City</span>
+          <button class="close-dropdown-btn">×</button>
+        </div>
+        <div class="city-options">
+          ${cities.map(city => `
+            <div class="city-option" 
+                 data-city="${city}"
+                 data-id="${busCityData[city].id}"
+                 ${selectedCity === city ? 'data-selected="true"' : ''}>
+              <div class="city-id">${busCityData[city].id}</div>
+              <div class="city-name">${busCityData[city].name}</div>
+            </div>
+          `).join('')}
         </div>
       </div>
-    `;
-  };
-
-  const busSearchHtml = `
-    <div class="bus-search-response">
-      <div class="city-selection">
-        ${createCustomSelect('departure', 'From', fromCity)}
-        <button class="swap-cities-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M8 3L4 7L8 11" />
-            <path d="M4 7H20" />
-            <path d="M16 21L20 17L16 13" />
-            <path d="M20 17H4" />
-          </svg>
-        </button>
-        ${createCustomSelect('destination', 'To', toCity)}
-      </div>
-
-      <div class="date-selection">
-        <div class="date-field">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-            <line x1="16" y1="2" x2="16" y2="6" />
-            <line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-          </svg>
-          <input type="date" id="departureDate" name="departureDate" value="${departureDate || ''}" required>
-        </div>
-      </div>
-
-      <button type="submit" class="search-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-        Check Bus
-      </button>
     </div>
+  `;
+};
+
+const busSearchHtml = `
+  <div class="bus-search-response">
+    <div class="city-selection">
+      ${createCustomSelect('origin', 'From', fromCity)}
+      <button class="swap-cities-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3L4 7L8 11" />
+          <path d="M4 7H20" />
+          <path d="M16 21L20 17L16 13" />
+          <path d="M20 17H4" />
+        </svg>
+      </button>
+      ${createCustomSelect('arrival', 'To', toCity)}
+    </div>
+
+    <div class="date-selection">
+      <div class="date-field">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        <input type="date" id="departureDate" name="departureDate" value="${departureDate || ''}" required>
+      </div>
+    </div>
+
+    <button type="submit" class="search-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+      Check Bus
+    </button>
+  </div>
 
     <style>
       .bus-search-response {
@@ -4869,136 +4869,292 @@ createBusSearchResponse(fromCity = null, toCity = null, departureDate = null) {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
+
+      @media (max-width: 480px) {
+  .bus-search-response {
+    width: 83vw;
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  /* City selection layout */
+  .city-selection {
+    flex-direction: row;
+    gap: 12px;
+    color: #FFF;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 16px;
+  }
+
+  .custom-select-container {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+  }
+
+  /* City search input */
+  .city-search-input {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    height: 52px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    background: #000;
+    transition: all 0.2s ease;
+  }
+
+  .city-search-input:focus {
+    border-color: #FFF;
+    outline: none;
+  }
+
+  /* Bottom sheet city dropdown */
+  .city-dropdown {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    max-height: 75vh;
+    overflow-y: auto;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+    padding: 24px 0 16px;
+    z-index: 1001;
+    background: #FFFFFF;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .city-dropdown.hidden {
+    transform: translateY(100%);
+  }
+
+  .dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px 16px;
+    color: #000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .close-dropdown-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+  }
+
+  .city-options {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  /* City option typography and layout */
+  .city-id {
+    font-size: 18px;
+    font-weight: 600;
+    min-width: 48px;
+    color: #1A1A1A;
+  }
+
+  .city-name {
+    font-size: 15px;
+    font-weight: 400;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333333;
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Swap cities button */
+  .swap-cities-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .swap-cities-btn:active {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(0.95);
+  }
+
+  /* Scrollbar styling */
+  .city-dropdown::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .city-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .city-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+}
     </style>
   `;
 
   // Add event listeners
   setTimeout(() => {
     const setupBusCitySearch = (inputId) => {
-      const input = document.getElementById(`${inputId}-input`);
-      const hiddenInput = document.getElementById(inputId);
-      const dropdown = document.getElementById(`${inputId}-dropdown`);
-      const closeBtn = dropdown.querySelector('.close-dropdown-btn');
-      const options = dropdown.querySelectorAll('.city-option');
+  const input = document.getElementById(`${inputId}-input`);
+  const hiddenInput = document.getElementById(inputId);
+  const dropdown = document.getElementById(`${inputId}-dropdown`);
+  const closeBtn = dropdown.querySelector('.close-dropdown-btn');
+  const options = dropdown.querySelectorAll('.city-option');
 
-      let isDropdownOpen = false;
+  let isDropdownOpen = false;
 
-      const openDropdown = () => {
-        dropdown.style.display = 'block';
-        isDropdownOpen = true;
-      };
+  const openDropdown = () => {
+    dropdown.style.display = 'block';
+    isDropdownOpen = true;
+  };
 
-      const closeDropdown = () => {
-        dropdown.style.display = 'none';
-        isDropdownOpen = false;
-      };
+  const closeDropdown = () => {
+    dropdown.style.display = 'none';
+    isDropdownOpen = false;
+  };
 
-      // Open dropdown on input focus or click
-      input.addEventListener('focus', (e) => {
-        e.stopPropagation();
-        openDropdown();
-      });
+  // Open dropdown on input focus or click
+  input.addEventListener('focus', (e) => {
+    e.stopPropagation();
+    openDropdown();
+  });
 
-      input.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openDropdown();
-      });
+  input.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openDropdown();
+  });
 
-      // Close dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
-          closeDropdown();
-        }
-      });
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+      closeDropdown();
+    }
+  });
 
-      // Close dropdown when clicking the close button
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeDropdown();
-      });
+  // Close dropdown when clicking the close button
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeDropdown();
+  });
 
-      // Handle city selection
-      options.forEach(option => {
-        option.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const cityName = option.dataset.city;
-          const cityId = option.dataset.id;
-          input.value = `${cityId} - ${busCityData[cityName].name}`;
-          hiddenInput.value = cityId;
-          closeDropdown();
-        });
-      });
+  // Handle city selection
+  options.forEach(option => {
+    option.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const cityName = option.dataset.city;
+      const cityId = option.dataset.id;
+      input.value = `${cityId} - ${busCityData[cityName].name}`;
+      hiddenInput.value = cityId;
+      closeDropdown();
+    });
+  });
 
-      // Filter options based on input
-      input.addEventListener('input', (e) => {
-        const searchText = e.target.value.toLowerCase();
-        options.forEach(option => {
-          const cityName = option.dataset.city;
-          const cityId = option.dataset.id;
-          const matches = cityName.toLowerCase().includes(searchText) || 
-                         cityId.toLowerCase().includes(searchText);
-          option.style.display = matches ? 'flex' : 'none';
-        });
-      });
+  // Filter options based on input
+  input.addEventListener('input', (e) => {
+    const searchText = e.target.value.toLowerCase();
+    options.forEach(option => {
+      const cityName = option.dataset.city;
+      const cityId = option.dataset.id;
+      const matches = cityName.toLowerCase().includes(searchText) || 
+                     cityId.toLowerCase().includes(searchText);
+      option.style.display = matches ? 'flex' : 'none';
+    });
+  });
+};
+
+  // Bus dropdown setup
+  setupBusCitySearch('origin');
+  setupBusCitySearch('arrival');
+
+  // City swap functionality
+  const swapBtn = document.querySelector('.swap-cities-btn');
+  swapBtn.addEventListener('click', () => {
+    const fromInput = document.getElementById('origin-input');
+    const toInput = document.getElementById('arrival-input');
+    const fromHidden = document.getElementById('origin');
+    const toHidden = document.getElementById('arrival');
+
+    const tempValue = fromInput.value;
+    const tempHidden = fromHidden.value;
+    
+    fromInput.value = toInput.value;
+    fromHidden.value = toHidden.value;
+    toInput.value = tempValue;
+    toHidden.value = tempHidden;
+  });
+
+  // Form submission
+  document.querySelector('.search-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    const fromCityId = document.getElementById('origin').value;
+    const toCityId = document.getElementById('arrival').value;
+    const departureDate = document.getElementById('departureDate').value;
+
+    // Validate required fields
+    if (!fromCityId || !toCityId || !departureDate) {
+      alert('Please fill out all required fields: From, To, and Departure Date.');
+      return;
+    }
+
+    // Extract city names from input values
+    const fromCityName = document.getElementById('origin-input').value.split(' - ')[1];
+    const toCityName = document.getElementById('arrival-input').value.split(' - ')[1];
+
+    // Format date for redBus URL
+    const formatDate = (dateString) => {
+      const [year, month, day] = dateString.split('-');
+      return `${day}-${month}-${year}`;
     };
 
-    // Bus dropdown setup
-    setupBusCitySearch('departure');
-    setupBusCitySearch('destination');
+    // Construct the redBus URL
+    const url = `https://www.redbus.in/search?fromCityName=${encodeURIComponent(fromCityName)}&fromCityId=${fromCityId}&toCityName=${encodeURIComponent(toCityName)}&toCityId=${toCityId}&onward=${formatDate(departureDate)}&srcCountry=IND&destCountry=IND`;
 
-    // City swap functionality
-    const swapBtn = document.querySelector('.swap-cities-btn');
-    swapBtn.addEventListener('click', () => {
-      const fromInput = document.getElementById('departure-input');
-      const toInput = document.getElementById('destination-input');
-      const fromHidden = document.getElementById('departure');
-      const toHidden = document.getElementById('destination');
+    // Redirect to the generated URL
+    window.location.href = url;
+  });
 
-      const tempValue = fromInput.value;
-      const tempHidden = fromHidden.value;
-      
-      fromInput.value = toInput.value;
-      fromHidden.value = toHidden.value;
-      toInput.value = tempValue;
-      toHidden.value = tempHidden;
-    });
-
-    // Form submission
-    document.querySelector('.search-btn').addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      const fromCityId = document.getElementById('departure').value;
-      const toCityId = document.getElementById('destination').value;
-      const departureDate = document.getElementById('departureDate').value;
-
-      // Validate required fields
-      if (!fromCityId || !toCityId || !departureDate) {
-        alert('Please fill out all required fields: From, To, and Departure Date.');
-        return;
-      }
-
-      // Extract city names from input values
-      const fromCityName = document.getElementById('departure-input').value.split(' - ')[1];
-      const toCityName = document.getElementById('destination-input').value.split(' - ')[1];
-
-      // Format date for redBus URL
-      const formatDate = (dateString) => {
-        const [year, month, day] = dateString.split('-');
-        return `${day}-${month}-${year}`;
-      };
-
-      // Construct the redBus URL
-      const url = `https://www.redbus.in/search?fromCityName=${encodeURIComponent(fromCityName)}&fromCityId=${fromCityId}&toCityName=${encodeURIComponent(toCityName)}&toCityId=${toCityId}&onward=${formatDate(departureDate)}&srcCountry=IND&destCountry=IND`;
-
-      // Redirect to the generated URL
-      window.location.href = url;
-    });
-
-    // Date input formatting and validation
-    const departureDateInput = document.getElementById('departureDate');
-    const today = new Date().toISOString().split('T')[0];
-    departureDateInput.min = today;
-  }, 0);
+  // Date input formatting and validation
+  const departureDateInput = document.getElementById('departureDate');
+  const today = new Date().toISOString().split('T')[0];
+  departureDateInput.min = today;
+}, 0);
 
   return busSearchHtml;
 }
